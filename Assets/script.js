@@ -1,6 +1,14 @@
 
+
 // Wrap all code that interacts with the DOM in a call to jQuery to ensure that the code isn't run until the browser has finished rendering all the elements
 
+// the $ () is a shorthand for the getElementbyID method
+// using the .ready function will make this function available as soon as the DOM is loaded
+
+$(document).ready(function() {
+
+
+})
 
 
 
