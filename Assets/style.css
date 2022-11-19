@@ -64,3 +64,8 @@ textarea {
   padding: 0.5rem;
   color: purple;
 }
+
+/* this will make the class show */
+.show {
+  display: block;
+}

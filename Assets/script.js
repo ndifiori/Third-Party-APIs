@@ -1,35 +1,91 @@
 
-
-// Wrap all code that interacts with the DOM in a call to jQuery to ensure that the code isn't run until the browser has finished rendering all the elements
-
 // the $ () is a shorthand for the getElementbyID method
-// using the .ready function will make this function available as soon as the DOM is loaded
+// using the .ready function will make this function available as soon as the DOM is loaded, but it will wait for the browswer to load
 
-$(document).ready(function() {
+$(document).ready(function () {
+
+    // shorthand to get element with saveBtn class and .on will give us the shorthand to get 2 event handlers for the selected element
+    $('.saveBtn').on('click',function () {
+
+    // $(this) keyword enables jquery functionality 
+
+    // create variable which will find the siblings of saveBtn with class description and create a value 
+    var value = $(this).siblings('.description').val();
+
+    // create varaible which will find the parent of saveBtn and find the id attribute  
+    var time = $(this).parent().attr('id');
+
+    // this will store our new variables in the local storage object
+    localStorage.setItem(time, value);
+
+    // grabs the section element with id notification and adds a class 
+    $('.notification').addClass('show');
+
+    // this function will remove the added class after 3 seconds
+    setTimeout(function () {
+      
+      // grabs the section element with id notificiation and removes the class
+      $('.notification').removeClass('show');
+    },5000);
+  });
 
 
-})
+    // need function to determine if the time is the present, past or future
+    function keepTime () {
 
+      // this will create a variable that gets the current day and hour
+      var currentTime = dayjs().hour();
 
+      // loop over each element with time block class and run this function
+      $('.time-block').each(function () {
 
-// in the html.
-$(function () {
-  // TODO: Add a listener for click events on the save button. This code should
-  // use the id in the containing time-block as a key to save the user input in
-  // local storage. HINT: What does `this` reference in the click listener
-  // function? How can DOM traversal be used to get the "hour-x" id of the
-  // time-block containing the button that was clicked? How might the id be
-  // useful when saving the description in local storage?
-  //
-  // TODO: Add code to apply the past, present, or future class to each time
-  // block by comparing the id to the current hour. HINTS: How can the id
-  // attribute of each time-block be used to conditionally add or remove the
-  // past, present, and future classes? How can Day.js be used to get the
-  // current hour in 24-hour time?
-  //
-  // TODO: Add code to get any user input that was saved in localStorage and set
-  // the values of the corresponding textarea elements. HINT: How can the id
-  // attribute of each time-block be used to do this?
-  //
-  // TODO: Add code to display the current date in the header of the page.
+      // create a variable that will deconstruct the string and return the first integar 
+      // this will check the attribute of elements with class time-block and return the value of the id attribute
+      //  next this will split at the dash and store the first number
+      var calenderHour = parseInt($(this).attr('id').split('-')[1]);
+
+        if (calenderHour < currentTime) {
+
+           // this refers to the element with class time block and add class past
+          $(this).addClass('past');
+
+        } else if (calenderHour === currentTime) {
+
+          // this refers to the element with class time block and removes the class past while adding the class present
+          $(this).removeClass('past');
+          $(this).addClass('present');
+
+        } else {
+
+          // this refers to the element with class time block and 
+          $(this).removeClass('past');
+          $(this).removeClass('present');
+          $(this).addClass('future');
+          }
+      });
+    }
+
+    // this will run the function 
+    keepTime();
+
+    // this will set a delay for our function to tell it when to run again
+    setInterval(keepTime,10000);
+
+    // this will select the element that has the id with hour-# and it will select the element with the class description
+    // then will put the value that was stored in local storage 
+    $('#hour-9 .description').val(localStorage.getItem('hour-9'));
+    $('#hour-10 .description').val(localStorage.getItem('hour-10'));
+    $('#hour-11 .description').val(localStorage.getItem('hour-11'));
+    $('#hour-12 .description').val(localStorage.getItem('hour-12'));
+    $('#hour-13 .description').val(localStorage.getItem('hour-13'));
+    $('#hour-14 .description').val(localStorage.getItem('hour-14'));
+    $('#hour-15 .description').val(localStorage.getItem('hour-15'));
+    $('#hour-16 .description').val(localStorage.getItem('hour-16'));
+    $('#hour-17 .description').val(localStorage.getItem('hour-17'));
+
+  // this will display the the current day by selecting the paragraph elemetn with the id currentday
+  $('#currentDay').text(dayjs().format('dddd, MMMM D, YYYY'));
+
 });
+
+

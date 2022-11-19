@@ -1,3 +1,6 @@
+
+
+
 $(document).ready(function () {
   // listen for save button clicks
   $('.saveBtn').on('click', function () {
@@ -16,6 +19,11 @@ $(document).ready(function () {
       $('.notification').removeClass('show');
     }, 5000);
   });
+
+
+
+
+
 
   function hourUpdater() {
     // get current number of hours
